@@ -71,12 +71,15 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Quad.cpp" />
     <ClCompile Include="ShaderInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="IDrawerInstance.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="Quad.h" />
     <ClInclude Include="ShaderInstance.h" />
   </ItemGroup>
   <ItemGroup>

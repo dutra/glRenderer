@@ -6,6 +6,10 @@
 #include <cstdlib>
 #include <sstream>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <vector>
 #include "ConsoleColor.h"
 
@@ -108,6 +112,28 @@ void ShaderInstance::use() {
 	glUseProgram(_shader_program);
 }
 
+void ShaderInstance::setUniforms() {
+	glUseProgram(_shader_program);
+
+	// Set up projection
+	glm::mat4 view = glm::lookAt(
+		glm::vec3(0.0f, 1.0, 1.0f),
+		glm::vec3(0.0f, -2.0f, 0.0f),
+		glm::vec3(0.0f, 0.0f, 1.0f)
+		);
+
+	GLint uniView = glGetUniformLocation(_shader_program, "view");
+	glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+
+	glm::mat4 proj = glm::perspective(65.0f, 800.0f / 600.0f, 1.0f, 20.0f);
+	GLint uniProj = glGetUniformLocation(_shader_program, "proj");
+	glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+
+	GLint uniColor = glGetUniformLocation(_shader_program, "overrideColor");
+	
+
+}
+
 void ShaderInstance::unuse() {
 	glUseProgram(NULL);
 }
@@ -128,6 +154,7 @@ GLuint ShaderInstance::getProgram() {
 
 void ShaderInstance::setTextureUniform(std::string name, int value) {
 	glUseProgram(_shader_program);
-	glUniform1i(glGetUniformLocation(_shader_program, name.c_str()), 0);
+	glUniform1i(glGetUniformLocation(_shader_program, name.c_str()), value);
+	glUseProgram(NULL);
 }
 

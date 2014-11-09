@@ -45,17 +45,18 @@ void Cube::translate(float x, float y, float z) {
 
 void Cube::draw() {
 
-	glBindVertexArray(_vao_cube);
-	glEnable(GL_DEPTH_TEST);
 	_shader->use();
+
+	glBindVertexArray(_vao_cube);	
 
 	// Calculate transformation
 	
 	glUniformMatrix4fv(_uni_model, 1, GL_FALSE, glm::value_ptr(_model));
 
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _texture);
+	if (_texture != NULL) {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _texture);
+	}
 
 	// Draw cube
 	glDrawArrays(GL_TRIANGLES, 0, 36);

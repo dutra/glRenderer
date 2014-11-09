@@ -16,7 +16,7 @@ public:
 	void use();
 	void unuse();
 	void setTextureUniform(std::string name, int value);
-
+	void setUniforms();
 	~ShaderInstance();
 
 private:
