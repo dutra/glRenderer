@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Quad.cpp" />
@@ -77,6 +78,7 @@
   <ItemGroup>
     <ClInclude Include="ConsoleColor.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="IDrawerInstance.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Quad.h" />
