@@ -42,6 +42,12 @@ int main() {
 	// Meshes
 	Cube cube;
 	cube.translate(0, -1, 0);
+	Cube cube2;
+	cube2.translate(-1, -2.5, 0);
+	Cube cube3;
+	cube3.translate(-2, -3.5, 0);
+	Cube cube4;
+	cube4.translate(-3, -4.5, 0);
 	Quad quad;
 
 	// Create Shaders
@@ -49,20 +55,26 @@ int main() {
 	ShaderInstance screenShader;
 
 	// Create shader programs
-	sceneShader.load("shaders/Scene.vert", "shaders/Scene.frag");
+	sceneShader.load("shaders/SceneDoF.vert", "shaders/SceneDoF.frag");
 	sceneShader.bindFragDataLocation(0, "outColor");
 	sceneShader.bindFragDataLocation(1, "outDepth");
 	sceneShader.compile();
 
-	screenShader.load("shaders/Screen.vert", "shaders/Screen.frag");
+	screenShader.load("shaders/ScreenDoF.vert", "shaders/ScreenDoF.frag");
 	screenShader.compile();
 
 	// Create frame buffer
 	FrameBuffer fbo( WINDOW_WIDTH, WINDOW_HEIGHT );
 
 	cube.bindShader(&sceneShader);
+	cube2.bindShader(&sceneShader);
+	cube3.bindShader(&sceneShader);
+	cube4.bindShader(&sceneShader);
 	sceneShader.setTextureUniform("texKitten", 0);
-	cube.addTexture("..\\textures\\kitten.jpg");
+	cube.addTexture("..\\textures\\lama.jpg");
+	cube2.addTexture("..\\textures\\lama.jpg");
+	cube3.addTexture("..\\textures\\lama.jpg");
+	cube4.addTexture("..\\textures\\lama.jpg");
 
 	quad.bindShader(&screenShader);
 	screenShader.setTextureUniform("texFramebuffer", 0);
@@ -86,7 +98,9 @@ int main() {
 
 		sceneShader.use();
 		cube.draw();
-	
+		cube2.draw();
+		cube3.draw();
+		cube4.draw();
 		screenShader.use();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -102,8 +116,8 @@ int main() {
 		window.display();
 		std::clock_t end = std::clock();
 		total_elapsed_secs += double(end - begin) / CLOCKS_PER_SEC;
-		if (++frames_counter == 10000)  {
-			std::cout << white << "Avg. drawing time: " << red << total_elapsed_secs / 10000.0 * 1000 << white << " ms, FPS: " << red << 1000 / (total_elapsed_secs / 10000.0 * 1000) << std::endl;
+		if (++frames_counter == 1000)  {
+			std::cout << white << "Avg. drawing time: " << red << total_elapsed_secs / 1000.0 * 1000 << white << " ms, FPS: " << red << 1000 / (total_elapsed_secs / 1000.0 * 1000) << std::endl;
 			frames_counter = 0;
 			total_elapsed_secs = 0;
 		}
