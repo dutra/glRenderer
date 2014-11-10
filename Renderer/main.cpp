@@ -50,13 +50,15 @@ int main() {
 
 	// Create shader programs
 	sceneShader.load("shaders/Scene.vert", "shaders/Scene.frag");
+	sceneShader.bindFragDataLocation(0, "outColor");
+	sceneShader.bindFragDataLocation(1, "outDepth");
 	sceneShader.compile();
 
 	screenShader.load("shaders/Screen.vert", "shaders/Screen.frag");
 	screenShader.compile();
 
 	// Create frame buffer
-	FrameBuffer fbo{ WINDOW_WIDTH, WINDOW_HEIGHT };
+	FrameBuffer fbo( WINDOW_WIDTH, WINDOW_HEIGHT );
 
 	cube.bindShader(&sceneShader);
 	sceneShader.setTextureUniform("texKitten", 0);
@@ -64,6 +66,7 @@ int main() {
 
 	quad.bindShader(&screenShader);
 	screenShader.setTextureUniform("texFramebuffer", 0);
+	screenShader.setTextureUniform("texDepth", 1);
 
 	sceneShader.setUniforms();
 
@@ -78,7 +81,7 @@ int main() {
 		glEnable(GL_DEPTH_TEST);
 
 		// Clear the screen to white
-		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		sceneShader.use();
@@ -93,10 +96,10 @@ int main() {
 		
 		quad.draw();
 
+//		screenshot("ss.tga", 800, 600);
 
 		// Swap buffers
 		window.display();
-
 		std::clock_t end = std::clock();
 		total_elapsed_secs += double(end - begin) / CLOCKS_PER_SEC;
 		if (++frames_counter == 10000)  {

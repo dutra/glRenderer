@@ -1,6 +1,7 @@
 
 #include <string>
 #include <GL/glew.h>
+#include <map>
 
 #pragma once
 
@@ -17,6 +18,7 @@ public:
 	void unuse();
 	void setTextureUniform(std::string name, int value);
 	void setUniforms();
+	void bindFragDataLocation(int i, std::string name);
 	~ShaderInstance();
 
 private:
@@ -27,7 +29,7 @@ private:
 	GLuint _fragment_shader;
 	GLuint _shader_program;
 
-
+	std::map<int, std::string> _fragDataLocation;
 		
 };
 

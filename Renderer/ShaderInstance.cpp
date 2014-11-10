@@ -71,8 +71,6 @@ void ShaderInstance::compile() {
 		return;
 	}
 
-
-
 	// Create and compile the fragment shader
 	_fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(_fragment_shader, 1, &frag_src_c, NULL);
@@ -102,6 +100,11 @@ void ShaderInstance::compile() {
 	glAttachShader(_shader_program, _vertex_shader);
 	glAttachShader(_shader_program, _fragment_shader);
 	
+	for (auto m : _fragDataLocation) {
+		glBindFragDataLocation(_shader_program, m.first, m.second.c_str());
+		std::cout << white << "Binding FragDataLocation " << m.second << std::endl;
+	}
+
 	glLinkProgram(_shader_program);
 	
 	std::cout << white << "Done compiling Shader" << std::endl;
@@ -156,5 +159,11 @@ void ShaderInstance::setTextureUniform(std::string name, int value) {
 	glUseProgram(_shader_program);
 	glUniform1i(glGetUniformLocation(_shader_program, name.c_str()), value);
 	glUseProgram(NULL);
+}
+
+void ShaderInstance::bindFragDataLocation(int i, std::string name) {
+	_fragDataLocation[i] = name;
+	std::cout << white << "Adding FragDataLocation " << name << std::endl;
+
 }
 

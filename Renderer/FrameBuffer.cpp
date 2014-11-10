@@ -25,7 +25,17 @@ FrameBuffer::FrameBuffer(int window_width, int window_height) {
 	glGenTextures(1, &_fbo_texture);
 	// "Bind" the newly created texture : all future texture functions will modify this texture
 	glBindTexture(GL_TEXTURE_2D, _fbo_texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, window_width, window_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, window_width, window_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	// Create texture to hold color buffer
+	glGenTextures(1, &_fbo_texture2);
+	// "Bind" the newly created texture : all future texture functions will modify this texture
+	glBindTexture(GL_TEXTURE_2D, _fbo_texture2);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, window_width, window_height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -35,6 +45,7 @@ FrameBuffer::FrameBuffer(int window_width, int window_height) {
 	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _fbo_texture, 0); // Attach the texture fbo_texture to the color buffer in our frame buffer 
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, _fbo_texture2, 0); // Attach the texture fbo_texture to the color buffer in our frame buffer 
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _fbo_depth); // Attach the depth buffer fbo_depth to our frame buffer 
 
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER); // Check that status of our generated frame buffer  
@@ -43,6 +54,8 @@ FrameBuffer::FrameBuffer(int window_width, int window_height) {
 		std::cout << red << "ERROR: Couldn't create frame buffer" << std::endl; // Make sure you include <iostream>  
 		exit(0); // Exit the application  
 	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 
 }
 
@@ -51,12 +64,19 @@ FrameBuffer::~FrameBuffer() {
 }
 
 void FrameBuffer::use() {
+
 	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+	GLenum buffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	glDrawBuffers(2, buffers);
+
+
 }
 
 void FrameBuffer::bindTexture(int i) {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _fbo_texture);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, _fbo_texture2);
 
 }
 

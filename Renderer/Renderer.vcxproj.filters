@@ -50,6 +50,18 @@
     <None Include="shaders\Screen.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\SceneDoF.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\SceneDoF.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ScreenDoF.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ScreenDoF.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ShaderInstance.h">

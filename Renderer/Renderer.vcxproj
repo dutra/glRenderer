@@ -87,8 +87,12 @@
   <ItemGroup>
     <None Include="shaders\Scene.frag" />
     <None Include="shaders\Scene.vert" />
+    <None Include="shaders\SceneDoF.frag" />
+    <None Include="shaders\SceneDoF.vert" />
     <None Include="shaders\Screen.frag" />
     <None Include="shaders\Screen.vert" />
+    <None Include="shaders\ScreenDoF.frag" />
+    <None Include="shaders\ScreenDoF.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

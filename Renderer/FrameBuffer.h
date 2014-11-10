@@ -16,6 +16,7 @@ private:
 	GLuint _fbo;
 	GLuint _fbo_depth;
 	GLuint _fbo_texture;
+	GLuint _fbo_texture2;
 
 
 };

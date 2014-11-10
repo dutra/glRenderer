@@ -60,13 +60,13 @@ Quad::Quad() {
 	glGenVertexArrays(1, &_vao);
 	glGenBuffers(1, &_vbo);
 
-	_vertices.push_back(Vertex{ -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f });
-	_vertices.push_back(Vertex{ 0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f });
-	_vertices.push_back(Vertex{ 0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f });
+	_vertices.push_back(Vertex{ -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f });
+	_vertices.push_back(Vertex{ 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f });
+	_vertices.push_back(Vertex{ 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f });
 
-	_vertices.push_back(Vertex{ 0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f });
-	_vertices.push_back(Vertex{ -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f });
-	_vertices.push_back(Vertex{ -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f });
+	_vertices.push_back(Vertex{ 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f });
+	_vertices.push_back(Vertex{ -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f });
+	_vertices.push_back(Vertex{ -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f });
 	
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_vertices.size(), &_vertices.front(), GL_STATIC_DRAW);
